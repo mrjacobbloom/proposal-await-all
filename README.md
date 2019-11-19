@@ -159,21 +159,9 @@ async function() {
 }
 ```
 
-`return` statements are illegal inside `await.all` or its substatements.
+`return` statements should probably be illegal inside `await.all` and its substatements.
 
-This syntax _would_ make it easier to write code that has invalid dependencies on race conditions:
-
-```javascript
-async function() {
-  let foo = 1;
-  await.all {
-    foo = 2;
-    console.log(foo);
-  }
-}
-```
-
-This is a reality of working with parallelism in most capacities, and is already possible in JS. This is probably something that would have to be left to a linter to catch.
+This syntax _would_ make it easier to write code that has invalid dependencies on race conditions. This is a reality of working with parallelism in most capacities, and is already possible in JS. This is probably something that would have to be left to a linter to catch.
 
 ### Reasoning for This Syntax
 
@@ -287,9 +275,9 @@ await
 answer = result1+ result2 + sum(resultarray)
 ```
 
-Here, `A defer B` spawns a promise that, when `A` resolves, declares `B` and sets it to the result of `A`. Since assigning the value to a variable is baked into the construct, the `defer` statement is locally non-blocking and can be used inside a for-loop. Once all of the `defer` statements in the `await` block resolve, the function resumes execution.
+Here, `A defer B` spawns a promise that, when `A` resolves, declares `B` and sets it to the result of `A`. Since assigning the value to a variable is baked into the construct, the `defer` function is locally non-blocking and can be used inside a for-loop. Once all of the `defer`s in the `await` block resolve, the function resumes execution.
 
-`await.all` is, in some sense, more flexible: because it's not limited to setting the value of a promise to a variable, it is more compatible with APIs like `fetch` that require chained promises or other post-processing. However, since each child statement has normal execution rules internally, a for-loop would not run in parallel, so it is not a good solution for iterating over an array of homogeneous promises (there's [another proposal](https://esdiscuss.org/topic/stage-0-proposal-specifying-concurrency-for-for-of-loops-potentially-containing-await-statements) for concurrent for-loops in JS).
+`await.all` is, in some sense, more flexible: because it's not limited to setting the value of a promise to a variable, it is easier to use with APIs like `fetch` that require chained promises, or any other post-processing (like the `response.data` example). However, since each statement in `await.all` has normal execution rules internally, a for-loop would not run in parallel, so it is not a good solution for iterating over an array of homogeneous promises (there's [another proposal](https://esdiscuss.org/topic/stage-0-proposal-specifying-concurrency-for-for-of-loops-potentially-containing-await-statements) for concurrent for-loops in JS).
 
 ## Relevant Discussions
 
