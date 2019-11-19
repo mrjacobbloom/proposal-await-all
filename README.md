@@ -163,7 +163,7 @@ async function() {
 
 `await.all` is a non-breaking syntax because `await` becomes a reserved word inside async functions. The impending [Top-Level Await](https://github.com/tc39/proposal-top-level-await) proposal [appears](https://tc39.es/proposal-top-level-await/#sec-async-function-definitions) to maintain the invariant that `await` is never a valid identifier and operator in the same place, so it should not break `await.all`. (note: Chrome's console currently allows both TLA and `await` as an identifier but I believe that's a deviation from the spec that may be reversed once TLA is adopted.)
 
-`async.all` or `await async.all` are breaking syntax since [`async` is not a reserved word](https://www.ecma-international.org/ecma-262/10.0/index.html#prod-Keyword) and may be used as an identifier, even inside an async function. Thus, `async.all { ... }` is currently valid syntax, and is parsed as a property access followed by an unlabeled block statement.
+`async.all` or `await async.all` are breaking syntax since [`async` is not a reserved word](https://www.ecma-international.org/ecma-262/10.0/index.html#prod-Keyword) and may be used as an identifier, even inside an async function. Thus, `async.all \n { ... }` is currently valid syntax, and is parsed as a property access followed by an unlabeled block statement.
 
 The reason for using curly braces over parentheses is to make it more obvious that `await.all` is syntax, as opposed to a function. If `await.all` is indistinguishable from a function, it encourages users to only evaluate expressions (as opposed to non-expression statements) inside it.
 
