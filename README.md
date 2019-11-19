@@ -159,6 +159,22 @@ async function() {
 }
 ```
 
+`return` statements are illegal inside `await.all` or its substatements.
+
+This syntax _would_ make it easier to write code that has invalid dependencies on race conditions:
+
+```javascript
+async function() {
+  let foo = 1;
+  await.all {
+    foo = 2;
+    console.log(foo);
+  }
+}
+```
+
+This is a reality of working with parallelism in most capacities, and is already possible in JS. This is probably something that would have to be left to a linter to catch.
+
 ### Reasoning for This Syntax
 
 `await.all` is a non-breaking syntax because `await` becomes a reserved word inside async functions. The impending [Top-Level Await](https://github.com/tc39/proposal-top-level-await) proposal [appears](https://tc39.es/proposal-top-level-await/#sec-async-function-definitions) to maintain the invariant that `await` is never a valid identifier and operator in the same place, so it should not break `await.all`. (note: Chrome's console currently allows both TLA and `await` as an identifier but I believe that's a deviation from the spec that may be reversed once TLA is adopted.)
