@@ -240,7 +240,7 @@ async function playChords() {
 
 ## Alternative Solution: `async do {}`
 
-This is based on [a discussion](tc39/proposal-do-expressions#4) in the do-expressions repo. The above `initialize()` function might look something like this:
+This is based on [a discussion](https://github.com/tc39/proposal-do-expressions/issues/4) in the do-expressions repo. The above `initialize()` function might look something like this:
 
 ```javascript
 async function initialize() {
