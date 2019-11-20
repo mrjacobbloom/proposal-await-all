@@ -171,9 +171,9 @@ This syntax _would_ make it easier to write code that has invalid dependencies o
 
 The reason for using curly braces over parentheses is to make it more obvious that `await.all` is syntax, as opposed to a function. If `await.all` is indistinguishable from a function, it encourages users to only evaluate expressions (as opposed to non-expression statements) inside it.
 
-Alternatively, it could use square brackets. This would have the added benefit of not creating a block scope (so variables could be defined inside the brackets and used outside of them, saving a line of declarations). In my discussions with developers, square brackets made them interpret the construct as an array, leading them to only include expressions in the brackets.
+Alternatively, it could use square brackets. This would have the added benefit of not creating a block scope (so variables could be defined inside the brackets and used outside of them, saving a line of declarations). In my discussions with developers, square brackets made them interpret the construct as an array, leading them to only include expressions in the brackets and feel uncomfortable with using semicolons as the delimiter.
 
-An alternative syntax might be `await* { stmt, stmt, stmt }`, although this doesn't naturally extend to other methods like `Promise.race` the way `await.all` does. This could also cause confusion since it's unrelated to the similar-looking `yield*`.
+An alternative syntax might be `await* { stmt; stmt; stmt; }`, although this doesn't naturally extend to other methods like `Promise.race` the way `await.all` does. This could also cause confusion since it's unrelated to the similar-looking `yield*`.
 
 ## Examples
 
